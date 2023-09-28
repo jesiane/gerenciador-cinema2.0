@@ -1,3 +1,3 @@
 export type FilmeTrailler = {
-  trailler: string
+  trailer: string
 }

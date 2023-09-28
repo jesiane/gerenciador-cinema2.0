@@ -1,0 +1,76 @@
+<div class="container d-grid gap-3 my-4">
+  <div class="d-flex align-items-center">
+      <h1 class="text-primary-dark">{{filmeDetalhes.titulo}}
+          <p class="d-block fs-3 text-dark" id="dataLancamento">{{filmeDetalhes.data.split('-')[0]}}</p>
+      </h1>
+      <div class="ms-auto text-end">
+          <p class="text-dark">{{filmeDetalhes.nota}} / 10</p>
+          <p class="text-dark">{{filmeDetalhes.votos}} Votos</p>
+          <i id="lblFavorito"
+              [ngClass]="ehFavorito ? 'bi bi-heart-fill fs-2 text-primary' : 'bi bi-heart fs-2 text-primary' "
+              role="button" (click)="atualizarFavoritos()"
+              [ngbTooltip]="ehFavorito ? 'retirar dos favoritos' : 'adicionar aos favoritos'" placement="left">
+          </i>
+      </div>
+  </div>
+  <div class="row gap-3">
+      <div *ngIf="imagem_url != '' " id="pnlPoster" class="col-12 col-md-4 col-lg-3">
+          <img [ngSrc]="imagem_url" width="400" height="600"
+          class="img-fluid rounded-3" alt="" />
+      </div>
+      <div class="col">
+          <div *ngIf="video_url != '' " id="pnlTrailer" class="ratio ratio-21x9 h-100">
+              <iframe class="rounded-3" id="iframeTrailer" [src]="video_url | urlSeguro" frameborder="0"
+                  allowfullscreen></iframe>
+          </div>
+      </div>
+  </div>
+  <div id="pnlGeneros" class="d-flex flex-wrap gap-3">
+      <span *ngFor="let genero of filmeDetalhes.generos"
+          class="badge rounded-pill fs-5 px-4 py-2 bg-primary text-light">
+          {{genero}}
+      </span>
+  </div>
+  <div class="d-flex flex-wrap">
+      <p id="lblDescricao" class="fs-5 text-dark">
+          {{filmeDetalhes.descricao}}
+      </p>
+  </div>
+  <div id="pnlCreditos" class="d-flex flex-wrap">
+      <div class="row border-bottom border-dark">
+          <p class="col my-auto py-2 fw-bold align-text-center text-dark ml-auto">
+              Diretores
+          </p>
+          <p class="col my-auto py-2 align-text-center text-dark ml-auto">
+              {{formatarListaCreditos(filmeCreditos.diretores)}}
+          </p>
+      </div>
+      <div class="row border-bottom border-dark">
+          <p class="col my-auto py-2 fw-bold align-text-center text-dark ml-auto">
+              Escritores
+          </p>
+          <p class="col my-auto py-2 align-text-center text-dark ml-auto">
+              {{formatarListaCreditos(filmeCreditos.escritores)}}
+          </p>
+      </div>
+      <div class="row">
+          <p class="col my-auto py-2 fw-bold align-text-center text-dark ml-auto">
+              Atores
+          </p>
+          <p class="col my-auto py-2 align-text-center text-dark ml-auto">
+              {{formatarListaCreditos(filmeCreditos.atores)}}
+          </p>
+      </div>
+  </div>
+      <span *ngIf="filmeAvaliacoes.length" class="d-flex w-100 justify-content-center">
+          <button (click)="alterarVisualizacaoAvaliacoes()"
+              [ngClass]="avaliacaoVisivel ? 'btn-ocultar text-light bg-dark' : 'btn-visualizar text-dark bg-light' "
+              class="my-5 text-center w-90 w-md-50 w-lg-50 rounded-pill">
+              <h2>{{avaliacaoVisivel ? 'Ocultar Avaliações' : 'Visualizar Avaliações'}}</h2>
+          </button>
+      </span>
+      <div *ngIf="avaliacaoVisivel" class="container-fluid flex flex-wrap">
+          <app-card-avaliacao *ngFor="let avaliacao of filmeAvaliacoes"
+              [avaliacao]="avaliacao"></app-card-avaliacao>
+      </div>
+</div>

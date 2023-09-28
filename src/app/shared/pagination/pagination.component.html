@@ -1,0 +1,9 @@
+<ngb-pagination
+[collectionSize]="1000"
+[(page)]="page"
+[maxSize]="tamanho_tela >= 500 ? 7 : 3"
+[rotate]="true"
+[ellipses]="false"
+[boundaryLinks]="true"
+(pageChange)="paginaSelecionada($event)">
+</ngb-pagination>

@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center m-0 m-md-3 m-lg-3 my-1">
+  <div class="d-flex justify-content-center w-75 w-md-50 w-lg-50">
+      <input type="text" [(ngModel)]="titulo" placeholder="Pesquisar por Título"
+          (keydown.enter)="tituloSelecionado()"
+          class="input-pesquisa text-center w-100 p-2">
+      <button role="button" [ngbTooltip]="'pesquisar'" placement="bottom" class="btn-pesquisa btn bg-dark text-light"
+          (click)="tituloSelecionado()">
+          <i class="bi bi-search" role="button"></i>
+      </button>
+  </div>
+</div>

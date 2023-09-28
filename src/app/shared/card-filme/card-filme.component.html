@@ -1,1 +1,7 @@
-<p>card-filme works!</p>
+<div class="d-flex flex-column justify-content-end gap-2 text-center h-100">
+  <img routerLink="/filme-detalhes/{{filme.id}}" role="button" [ngSrc]="imagem_url" width="400" height="600"
+      class="h-100 w-100 rounded-3" />
+  <a routerLink="/filme-detalhes/{{filme.id}}" class="fs-5 link-information text-decoration-none">
+      {{filme.titulo}}
+  </a>
+</div>

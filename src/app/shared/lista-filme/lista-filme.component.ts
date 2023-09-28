@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-lista-filme',
@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./lista-filme.component.css']
 })
 export class ListaFilmeComponent {
+  @Output() onTituloSelecionado: EventEmitter<string>;
+  titulo: string;
 
+  constructor() {
+    this.titulo = '';
+    this.onTituloSelecionado = new EventEmitter();
+  }
+
+  tituloSelecionado(): void {
+    this.onTituloSelecionado.emit(this.titulo);
+    this.titulo = '';
+  }
 }
