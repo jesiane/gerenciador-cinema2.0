@@ -8,11 +8,10 @@ import { FilmesService } from 'src/app/services/filme.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { HistoricoUsuario } from 'src/app/models/historico-usuario';
 import { ToastrService } from 'ngx-toastr';
-import { Avaliacao } from 'src/app/models/filme-avaliacao';
 
 @Component({
   selector: 'app-filme-detalhes',
-  templateUrl: './detalhes-filme.component.css',
+  templateUrl: './detalhes-filme.component.html',
   styleUrls: ['./detalhes-filme.component.css']
 })
 export class FilmeDetalhesComponent {
