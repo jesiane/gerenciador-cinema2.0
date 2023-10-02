@@ -14,13 +14,19 @@ export class HomeComponent implements OnInit{
   filmes: Filme[] = [];
   historico: HistoricoUsuario;
   listagemTipo: string;
+  ehPaginado: boolean;
+  paginaAtual: number;
+
 
   constructor(
     private filmesService: FilmesService,
     private localStorageService: LocalStorageService,
+    private router: Router
     ) {
       this.historico = new HistoricoUsuario();
       this.listagemTipo = 'populares';
+      this.ehPaginado = true;
+      this.paginaAtual = 1;
     }
 
   ngOnInit(): void {  
@@ -31,6 +37,7 @@ export class HomeComponent implements OnInit{
 
   selecionarFavoritos() {
     this.listagemTipo = 'favoritos';
+    this.ehPaginado = false;
 
     if(this.historico.filmes_ids.length == 0) {
       this.filmes = [];
@@ -44,8 +51,10 @@ export class HomeComponent implements OnInit{
 
   selecionarFilmesPopulares(pagina?:number) {
     pagina = pagina ? pagina : 1;
+    this.paginaAtual = pagina;
 
     this.listagemTipo = 'populares';
+    this.ehPaginado = true;
 
     this.filmesService.selecionarFilmesMaisPopulares(pagina).subscribe(filmes => {
       this.filmes = filmes;
@@ -54,15 +63,34 @@ export class HomeComponent implements OnInit{
 
   selecionarFilmesMelhoresAvaliados(pagina?:number) {
     pagina = pagina ? pagina : 1;
+    this.paginaAtual = pagina;
 
     this.listagemTipo = 'avaliados';
+    this.ehPaginado = true;
 
     this.filmesService.selecionarFilmesMelhoresAvaliados(pagina).subscribe(filmes => {
       this.filmes = filmes;
     });
   }
 
+  selecionarFilmesPorTitulo(titulo?: string) {  
+    this.listagemTipo = 'pesquisados';
+    this.ehPaginado = false;
+
+    if(!titulo) {
+      this.filmes = [];
+      return;
+    }
+
+    this.router.navigate(
+      ['/busca'],
+      { queryParams: { query: titulo} }
+    );
+  }
+
   paginaSelecionada(pagina: number) {
+    window.scroll(0, 0);
+
     if(this.listagemTipo == 'populares') {
       this.selecionarFilmesPopulares(pagina);
     }

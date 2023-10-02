@@ -4,15 +4,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { NgOptimizedImage } from '@angular/common'
+
+import { HomeComponent } from './pages/home/home.component';
+import { FilmeDetalhesComponent } from './pages/detalhes-filme/detalhes-filme.component';
+import { BuscaComponent } from './pages/busca/busca.component';
 
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { HomeComponent } from './pages/home/home.component';
 import { CardFilmeComponent } from './shared/card-filme/card-filme.component';
-import { FilmeDetalhesComponent } from './pages/detalhes-filme/detalhes-filme.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { FilmePesquisaComponent } from './shared/filme-pesquisa/filme-pesquisa.component';
+import { CardAvaliacaoComponent } from './shared/card-avaliacao/card-avaliacao.component';
+
+import { UrlSeguroPipe } from './shared/pipes/url-seguro.pipe';
 
 
 @NgModule({
@@ -22,17 +30,24 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     NavbarComponent,
     CardFilmeComponent,
     FilmeDetalhesComponent,
-    PaginationComponent
+    PaginationComponent,
+    FilmePesquisaComponent,
+    CardAvaliacaoComponent,
+    BuscaComponent,
+    UrlSeguroPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     NgbModule,
     HttpClientModule,
     NgbPaginationModule,
     BrowserAnimationsModule,
+    NgOptimizedImage,
     ToastrModule.forRoot({
       timeOut: 5000,
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
   ],

@@ -1,0 +1,11 @@
+<div class="d-grid w-90 ml-auto border border-dark bg-light rounded-3 my-3">
+  <div class="d-flex flex-wrap gap-2 border-solid-dark p-2 mx-3">
+      <img [ngSrc]="'https://image.tmdb.org/t/p/w200' + avaliacao.caminho_avatar"
+      width="50" height="50"
+      class="avatar-img img-fluid rounded-3" />
+      <p class="text-primary my-3">{{avaliacao.usuario}}</p>
+      <p class="my-3"><b>Nota: </b>{{avaliacao.nota}}</p>
+      <p class="my-3"><b>Última edição: </b>{{avaliacao.data_atualizacao | date }}</p>
+  </div>
+  <p class="p-2 border border-gray bg-white rounded-3 m-3">{{avaliacao.conteudo}}</p>
+</div>
