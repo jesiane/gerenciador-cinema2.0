@@ -4,11 +4,11 @@ import { Observable, forkJoin } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Filme } from '../models/listagem-filme';
-import { FilmeDetalhes } from '../models/detalhes-filme';
-import { FilmeCreditos } from '../models/creditos-filme';
-import { FilmeTrailler } from '../models/trailer-filme';
-import { Avaliacao } from '../models/avaliacao-filme';
-import { FilmeBusca } from '../models/busca-filme';
+import { FilmeDetalhes } from '../models/filme-detalhes';
+import { FilmeCreditos } from '../models/filme-creditos';
+import { FilmeTrailer } from '../models/filme-trailer';
+import { Avaliacao } from '../models/filme-avaliacao';
+import { FilmeBusca } from '../models/filme-busca';
 
 @Injectable({
   providedIn: 'root'
@@ -100,7 +100,7 @@ export class FilmesService {
     return forkJoin(observables);
   }
 
-  public selecionarTrailerPorId(id: number): Observable<FilmeTrailler> {
+  public selecionarTrailerPorId(id: number): Observable<FilmeTrailer> {
     const url = `https://api.themoviedb.org/3/movie/${id}/videos?language=pt-BR`;
 
     return this.http.get<any>(url, this.obterHeaderAutorizacao())
@@ -183,7 +183,7 @@ export class FilmesService {
   private mapearFilmeTrailer(obj: any): FilmeTrailer {
     const trailer = obj[obj.length - 1]?.key;
     return {
-      trailer_caminho: trailer == null ? "" : trailer
+      trailer: trailer == null ? "" : trailer
     };
   }
 

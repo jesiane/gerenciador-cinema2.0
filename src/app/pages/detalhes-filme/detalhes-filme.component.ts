@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { FilmeCreditos } from 'src/app/models/creditos-filme';
-import { FilmeDetalhes } from 'src/app/models/detalhes-filme';
-import { FilmeTrailler } from 'src/app/models/trailer-filme';
+import { FilmeCreditos } from 'src/app/models/filme-creditos';
+import { FilmeDetalhes } from 'src/app/models/filme-detalhes';
+import { FilmeTrailer } from 'src/app/models/filme-trailer';
 import { FilmesService } from 'src/app/services/filme.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { HistoricoUsuario } from 'src/app/models/historico-usuario';
 import { ToastrService } from 'ngx-toastr';
-import { Avaliacao } from 'src/app/models/avaliacao-filme';
+import { Avaliacao } from 'src/app/models/filme-avaliacao';
 
 @Component({
   selector: 'app-filme-detalhes',
@@ -17,10 +17,8 @@ import { Avaliacao } from 'src/app/models/avaliacao-filme';
 })
 export class FilmeDetalhesComponent {
   filmeDetalhes: FilmeDetalhes;
-  filmeTrailer: FilmeTrailler;
+  filmeTrailer: FilmeTrailer;
   filmeCreditos: FilmeCreditos;
-  filmeAvaliacoes: Avaliacao[];
-  avaliacaoVisivel: boolean;
   imagem_url: string;
   video_url: string;
   ehFavorito: boolean;
@@ -45,7 +43,7 @@ export class FilmeDetalhesComponent {
     };
 
     this.filmeTrailer = {
-      trailler: ''
+      trailer: ''
     };
 
     this.filmeCreditos = {
@@ -54,13 +52,10 @@ export class FilmeDetalhesComponent {
       atores: [],
     };
 
-    this.filmeAvaliacoes = [];
-
     this.historico = new HistoricoUsuario();
 
     this.imagem_url = "";
     this.video_url = "";
-    this.avaliacaoVisivel = false;
     this.ehFavorito = false;
   }
 
@@ -75,22 +70,22 @@ export class FilmeDetalhesComponent {
       this.ehFavorito = this.historico.filmes_ids.includes(this.filmeDetalhes.id);
     });
 
-    this.filmeService.selecionarTrailerPorId(id).subscribe(filmeTrailler => {
-      this.filmeTrailer = filmeTrailler;
+    this.filmeService.selecionarTrailerPorId(id).subscribe(filmeTrailer => {
+      this.filmeTrailer = filmeTrailer;
       this.video_url = `https://www.youtube.com/embed/${this.filmeTrailer.trailer}/`;
     });
 
     this.filmeService.selecionarCreditosFilmePorId(id).subscribe(filmeCreditos => {
       this.filmeCreditos = filmeCreditos;
     });
-
-    this.filmeService.selecionarAvaliacoesPorId(id).subscribe(filmeAvaliacoes => {
-      this.filmeAvaliacoes = filmeAvaliacoes;
-    });
   }
 
   formatarListaCreditos(lista: string[]): string {
     return lista.map((c, i) => i == 0 ? c : ' º ' + c ).join('');
+  }
+
+  obterVideoUrl(): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.video_url);
   }
 
   atualizarFavoritos(): void {
@@ -108,9 +103,5 @@ export class FilmeDetalhesComponent {
     }
 
     this.localStorageService.salvarDados(this.historico);
-  }
-
-  alterarVisualizacaoAvaliacoes() {
-    this.avaliacaoVisivel = !this.avaliacaoVisivel;
   }
 }
